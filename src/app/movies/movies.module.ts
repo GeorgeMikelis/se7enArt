@@ -8,6 +8,7 @@ import { AllMoviesComponent } from './all-movies/all-movies.component';
 import { FavoriteMoviesComponent } from './favorite-movies/favorite-movies.component';
 import { MovieItemComponent } from './movie-item/movie-item.component';
 import { MoviesSearchComponent } from './movies-search/movies-search.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { MoviesSearchComponent } from './movies-search/movies-search.component';
     FavoriteMoviesComponent,
     MovieItemComponent,
     MoviesSearchComponent,
+    HeaderComponent
   ],
   imports: [CommonModule, MoviesRoutingModule],
 })
