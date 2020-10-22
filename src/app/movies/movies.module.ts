@@ -9,12 +9,15 @@ import { FavoriteMoviesComponent } from './favorite-movies/favorite-movies.compo
 import { MovieItemComponent } from './movie-item/movie-item.component';
 import { MoviesSearchComponent } from './movies-search/movies-search.component';
 
-
 @NgModule({
-  declarations: [MoviesComponent, HomeComponent, AllMoviesComponent, FavoriteMoviesComponent, MovieItemComponent, MoviesSearchComponent],
-  imports: [
-    CommonModule,
-    MoviesRoutingModule
-  ]
+  declarations: [
+    MoviesComponent,
+    HomeComponent,
+    AllMoviesComponent,
+    FavoriteMoviesComponent,
+    MovieItemComponent,
+    MoviesSearchComponent,
+  ],
+  imports: [CommonModule, MoviesRoutingModule],
 })
-export class MoviesModule { }
+export class MoviesModule {}
