@@ -9,6 +9,7 @@ import { FavoriteMoviesComponent } from './favorite-movies/favorite-movies.compo
 import { MovieItemComponent } from './movie-item/movie-item.component';
 import { MoviesSearchComponent } from './movies-search/movies-search.component';
 import { HeaderComponent } from './header/header.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,6 @@ import { HeaderComponent } from './header/header.component';
     MoviesSearchComponent,
     HeaderComponent
   ],
-  imports: [CommonModule, MoviesRoutingModule],
+  imports: [CommonModule, MoviesRoutingModule, SharedModule]
 })
 export class MoviesModule {}
