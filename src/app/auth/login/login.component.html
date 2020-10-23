@@ -1,1 +1,30 @@
-<p>login works!</p>
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="username">username</label>
+    <input
+      formControlName="username"
+      type="text"
+      id="username"
+      class="form-control"
+      name="username"
+      required
+     >
+     <span class="help-block" *ngIf="username.invalid && (username.dirty || username.touched)">Please enter a username with at least 4 characters</span>
+
+     <label for="password">password</label>
+     <input
+     formControlName="password"
+     type="password"
+     id="password"
+     class="form-control"
+     name="password"
+     required
+     >
+     <span class="help-block" *ngIf="password.invalid && (password.dirty || password.touched)">Please enter a password with both uppercasde and lowercase characters</span>
+
+  </div>
+
+    <div>
+        <button class="btn btn-primary" type="submit" [disabled]="!loginForm.valid">Login</button>
+    </div>
+</form>

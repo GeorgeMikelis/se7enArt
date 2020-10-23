@@ -1,1 +1,63 @@
-<p>sign-up works!</p>
+<form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="firstname">Firstname</label>
+    <input
+      formControlName="firstname"
+      type="text"
+      id="firstname"
+      class="form-control"
+      name="firstname"
+      required
+     >
+     <span class="help-block" *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)">Please enter a username with at least 4 characters</span>
+
+    <label for="lastname">Lastname</label>
+    <input
+      formControlName="lastname"
+      type="text"
+      id="lastname"
+      class="form-control"
+      name="lastname"
+      required
+     >
+     <span class="help-block" *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)">Please enter a username with at least 4 characters</span>
+
+    <label for="username">username</label>
+    <input
+      formControlName="username"
+      type="text"
+      id="username"
+      class="form-control"
+      name="username"
+      required
+     >
+     <span class="help-block" *ngIf="username.invalid && (username.dirty || username.touched)">Please enter a username with at least 4 characters</span>
+
+     <label for="password">password</label>
+     <input
+     formControlName="password"
+     type="password"
+     id="password"
+     class="form-control"
+     name="password"
+     required
+     >
+     <span class="help-block" *ngIf="password.invalid && (password.dirty || password.touched)">Please enter a password with both uppercasde and lowercase characters</span>
+
+     <label for="password2">reenter password</label>
+     <input
+     formControlName="password2"
+     type="password2"
+     id="password2"
+     class="form-control"
+     name="password2"
+     required
+     >
+     <span class="help-block" *ngIf="password2.invalid && (password2.dirty || password2.touched)">Please enter a password with both uppercasde and lowercase characters</span>
+
+  </div>
+
+    <div>
+        <button class="btn btn-primary" type="submit" [disabled]="!signupForm.valid">SignUp</button>
+    </div>
+</form>
