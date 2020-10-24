@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { AuthService } from 'src/app/domain/auth.service';
 import { bothUpperCaseLowerCaseValidator } from '../validators/upper-lower-case-validator';
@@ -11,6 +12,7 @@ import { bothUpperCaseLowerCaseValidator } from '../validators/upper-lower-case-
 })
 export class SignUpComponent implements OnInit {
   passwordsMatch: boolean;
+  error: string = null;
 
   signupForm = new FormGroup({
     firstname: new FormControl('', [
@@ -40,7 +42,7 @@ export class SignUpComponent implements OnInit {
   get password() { return this.signupForm.get('password'); }
   get password2() { return this.signupForm.get('password2'); }
 
-  constructor(private authServeice: AuthService) {}
+  constructor(private authServeice: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.passwordsMatch = true;
@@ -56,7 +58,16 @@ export class SignUpComponent implements OnInit {
     if (password === password2) {
       this.passwordsMatch = true;
       console.warn(this.signupForm.value);
-      this.authServeice.signUp(firstname, lastname, username, password).subscribe(resData => console.log(resData));
+      this.authServeice.signUp(firstname, lastname, username, password).subscribe(
+        resData => {
+          console.log(resData)
+          this.router.navigate(['../']);
+        },
+        errorMessage => {
+          console.log(errorMessage);
+          this.error = errorMessage;
+      }
+      );
     } else {
       this.passwordsMatch = false;
       console.log('Passwords do not match');

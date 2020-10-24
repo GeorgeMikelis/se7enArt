@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { AuthService } from 'src/app/domain/auth.service';
 import { bothUpperCaseLowerCaseValidator } from '../validators/upper-lower-case-validator';
@@ -10,6 +11,8 @@ import { bothUpperCaseLowerCaseValidator } from '../validators/upper-lower-case-
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  error: string = null;
+
   loginForm = new FormGroup({
     username: new FormControl('', [
       Validators.required,
@@ -26,7 +29,7 @@ export class LoginComponent implements OnInit {
   get password() { return this.loginForm.get('password'); }
   get rememberMe() { return this.loginForm.get('rememberMe'); }
 
-  constructor(private authServeice: AuthService) {}
+  constructor(private authServeice: AuthService, private router: Router) {}
 
   ngOnInit(): void {
   }
@@ -35,6 +38,16 @@ export class LoginComponent implements OnInit {
     console.warn(this.loginForm.value);
     let username = this.loginForm.value.username;
     let password = this.loginForm.value.password;
-    this.authServeice.login(username, password).subscribe(resData => console.log(resData));
+    let rememberMe = this.loginForm.value.rememberMe;
+    this.authServeice.login(username, password, rememberMe).subscribe(
+      resData => {
+        console.log(resData)
+        this.router.navigate(['../']);
+      },
+      errorMessage => {
+        console.log(errorMessage);
+        this.error = errorMessage;
+    }
+    );
   }
 }
