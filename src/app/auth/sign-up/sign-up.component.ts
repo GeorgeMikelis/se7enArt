@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+
+import { AuthService } from 'src/app/domain/auth.service';
 import { bothUpperCaseLowerCaseValidator } from '../validators/upper-lower-case-validator';
 
 @Component({
@@ -8,6 +10,8 @@ import { bothUpperCaseLowerCaseValidator } from '../validators/upper-lower-case-
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
+  passwordsMatch: boolean;
+
   signupForm = new FormGroup({
     firstname: new FormControl('', [
       Validators.required,
@@ -16,15 +20,16 @@ export class SignUpComponent implements OnInit {
       Validators.required,
     ]),
     username: new FormControl('', [
-      Validators.required,
-      Validators.minLength(4)
+      Validators.required
     ]),
     password: new FormControl('', [
       Validators.required,
+      Validators.minLength(6),
       bothUpperCaseLowerCaseValidator
     ]),
     password2: new FormControl('', [
       Validators.required,
+      Validators.minLength(6),
       bothUpperCaseLowerCaseValidator
     ]),
   });
@@ -35,10 +40,26 @@ export class SignUpComponent implements OnInit {
   get password() { return this.signupForm.get('password'); }
   get password2() { return this.signupForm.get('password2'); }
 
+  constructor(private authServeice: AuthService) {}
+
   ngOnInit(): void {
+    this.passwordsMatch = true;
   }
 
   onSubmit() {
-    console.warn(this.signupForm.value);
+    let firstname = this.signupForm.value.firstname;
+    let lastname = this.signupForm.value.lastname;
+    let username = this.signupForm.value.username;
+    let password = this.signupForm.value.password;
+    let password2 = this.signupForm.value.password2;
+
+    if (password === password2) {
+      this.passwordsMatch = true;
+      console.warn(this.signupForm.value);
+      this.authServeice.signUp(firstname, lastname, username, password).subscribe(resData => console.log(resData));
+    } else {
+      this.passwordsMatch = false;
+      console.log('Passwords do not match');
+    }
   }
 }

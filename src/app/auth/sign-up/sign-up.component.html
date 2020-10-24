@@ -9,7 +9,7 @@
       name="firstname"
       required
      >
-     <span class="help-block" *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)">Please enter a username with at least 4 characters</span>
+     <span class="help-block" *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)">Please enter a Firstname</span>
 
     <label for="lastname">Lastname</label>
     <input
@@ -20,7 +20,7 @@
       name="lastname"
       required
      >
-     <span class="help-block" *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)">Please enter a username with at least 4 characters</span>
+     <span class="help-block" *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)">Please enter a Lastname</span>
 
     <label for="username">username</label>
     <input
@@ -31,7 +31,7 @@
       name="username"
       required
      >
-     <span class="help-block" *ngIf="username.invalid && (username.dirty || username.touched)">Please enter a username with at least 4 characters</span>
+     <span class="help-block" *ngIf="username.invalid && (username.dirty || username.touched)">Please enter a username</span>
 
      <label for="password">password</label>
      <input
@@ -42,18 +42,18 @@
      name="password"
      required
      >
-     <span class="help-block" *ngIf="password.invalid && (password.dirty || password.touched)">Please enter a password with both uppercasde and lowercase characters</span>
+     <span class="help-block" *ngIf="password.invalid && (password.dirty || password.touched)">Please enter a password with at least 6 characters, both uppercasde and lowercase</span>
 
      <label for="password2">reenter password</label>
      <input
      formControlName="password2"
-     type="password2"
+     type="password"
      id="password2"
      class="form-control"
      name="password2"
      required
      >
-     <span class="help-block" *ngIf="password2.invalid && (password2.dirty || password2.touched)">Please enter a password with both uppercasde and lowercase characters</span>
+     <span class="help-block" *ngIf="!passwordsMatch">Please make sure that you provide the same password</span>
 
   </div>
 

@@ -9,7 +9,7 @@
       name="username"
       required
      >
-     <span class="help-block" *ngIf="username.invalid && (username.dirty || username.touched)">Please enter a username with at least 4 characters</span>
+     <span class="help-block" *ngIf="username.invalid && (username.dirty || username.touched)">Please enter a username</span>
 
      <label for="password">password</label>
      <input
@@ -20,11 +20,21 @@
      name="password"
      required
      >
-     <span class="help-block" *ngIf="password.invalid && (password.dirty || password.touched)">Please enter a password with both uppercasde and lowercase characters</span>
+     <span class="help-block" *ngIf="password.invalid && (password.dirty || password.touched)">Please enter a password with at least 6 characters, both uppercasde and lowercase</span>
+
+     <label for="rememberMe">Remember me!</label>
+     <input
+     formControlName="rememberMe"
+     type="checkbox"
+     id="rememberMe"
+     name="rememberMe"
+     style="margin-left: 5px;"
+     >
 
   </div>
 
     <div>
         <button class="btn btn-primary" type="submit" [disabled]="!loginForm.valid">Login</button>
+        <span><a routerLink="/sign-up" style="margin-left: 15px;">A new user?</a></span>
     </div>
 </form>
