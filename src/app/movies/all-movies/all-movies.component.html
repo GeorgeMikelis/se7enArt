@@ -1,1 +1,13 @@
 <p>all-movies works!</p>
+
+<div class="row">
+  <div class="col-md-12">
+    <ul class="list-group" *ngIf="movies && movies.length">
+      <app-movie-item *ngFor="let movie of movies | paginate: { itemsPerPage: 10, currentPage: p }" [movie]="movie"></app-movie-item>
+    </ul>
+  </div>
+</div>
+
+<pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+

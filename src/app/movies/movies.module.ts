@@ -13,6 +13,7 @@ import { SharedModule } from '../shared/shared.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from '../domain/interceptors/auth-interceptor.service';
 import { LoggingInterceptorService } from '../domain/interceptors/logging-interceptor.service';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import { LoggingInterceptorService } from '../domain/interceptors/logging-interc
     MoviesSearchComponent,
     HeaderComponent
   ],
-  imports: [CommonModule, MoviesRoutingModule, SharedModule],
+  imports: [CommonModule, MoviesRoutingModule, NgxPaginationModule, SharedModule],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true},
     { provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptorService, multi: true }
