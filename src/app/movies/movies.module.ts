@@ -10,6 +10,9 @@ import { MovieItemComponent } from './movie-item/movie-item.component';
 import { MoviesSearchComponent } from './movies-search/movies-search.component';
 import { HeaderComponent } from './header/header.component';
 import { SharedModule } from '../shared/shared.module';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptorService } from '../domain/interceptors/auth-interceptor.service';
+import { LoggingInterceptorService } from '../domain/interceptors/logging-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -21,6 +24,10 @@ import { SharedModule } from '../shared/shared.module';
     MoviesSearchComponent,
     HeaderComponent
   ],
-  imports: [CommonModule, MoviesRoutingModule, SharedModule]
+  imports: [CommonModule, MoviesRoutingModule, SharedModule],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptorService, multi: true }
+  ]
 })
 export class MoviesModule {}

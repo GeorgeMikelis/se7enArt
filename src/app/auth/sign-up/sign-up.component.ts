@@ -108,7 +108,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
           .subscribe(
             (resData) => {
               console.log(resData);
-              console.log('update occured');
+              console.log('a user created');
             },
             (errorMessage) => {
               console.log(errorMessage);
