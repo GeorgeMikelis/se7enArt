@@ -42,7 +42,6 @@ export class LoginComponent implements OnInit {
     this.authServeice.login(username, password, rememberMe).subscribe(
       resData => {
         console.log(resData)
-        this.router.navigate(['../']);
       },
       errorMessage => {
         console.log(errorMessage);

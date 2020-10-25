@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpParams} from '@angular/common/http';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpParams, HttpHeaders} from '@angular/common/http';
 import { take, exhaustMap} from 'rxjs/operators'
 
 import { AuthService } from '../auth.service';
@@ -17,7 +17,8 @@ export class AuthInterceptorService implements HttpInterceptor {
                     return next.handle(req);
                 }
                 const modifiedReq = req.clone({
-                    params: new HttpParams().set('auth', user.jwt)
+                    headers: new HttpHeaders().set('token', user.jwt)
+                    // headers: new HttpParams().set('token', user.jwt)
                 });
                 console.log('We have a user so we put jwt to all the requests from now on')
                 return next.handle(modifiedReq);

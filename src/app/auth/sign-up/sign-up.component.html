@@ -1,3 +1,10 @@
+<div *ngIf="!newUser">
+  <h1>Profile Page</h1>
+  <h3>Hello dear {{ user.username }}, here you can edit your personal info!</h3>
+</div>
+<div *ngIf="error" class="alert alert-danger" style="margin-bottom: 10px;">
+  {{ error }}
+</div>
 <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
   <div class="form-group">
     <label for="firstname">Firstname</label>
@@ -57,7 +64,10 @@
 
   </div>
 
-    <div>
+    <div *ngIf="newUser">
         <button class="btn btn-primary" type="submit" [disabled]="!signupForm.valid">SignUp</button>
+    </div>
+    <div *ngIf="!newUser">
+        <button class="btn btn-primary" type="submit" [disabled]="!signupForm.valid">Update and Logout</button>
     </div>
 </form>

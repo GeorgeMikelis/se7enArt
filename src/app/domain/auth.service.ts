@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 import { environment } from 'src/environments/environment';
 import { ApiPaths } from '../enums/api-paths';
@@ -14,17 +15,18 @@ export interface AuthResponseData {
     username: string;
     id: string;
   };
-  jwt: string;
+  jwt?: string;
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  user = new BehaviorSubject<UserWithJWT>(null);
+  userFromLocal = JSON.parse(localStorage.getItem('userData'))
+  user = new BehaviorSubject<UserWithJWT>(this.userFromLocal);
   baseUrl = environment.baseUrl;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   signUp(
     firstname: string,
@@ -55,6 +57,29 @@ export class AuthService {
     );
   }
 
+  updateUser(
+    firstname: string,
+    lastname: string,
+    username: string,
+    password: string
+  ) {
+    let url = `${this.baseUrl}/${ApiPaths.signUp}`;
+    let body = {
+      firstname: firstname,
+      lastname: lastname,
+      username: username,
+      password: password,
+    };
+    console.log(body);
+    return this.http.put<AuthResponseData>(url, body).pipe(
+      catchError(this.habdleError),
+      tap((resData) => {
+        console.log(resData),
+        this.logout();
+      })
+    );
+  }
+
   login(username: string, password: string, rememberMe: boolean) {
     let url = `${this.baseUrl}/${ApiPaths.login}`;
     let body = {
@@ -77,6 +102,13 @@ export class AuthService {
     );
   }
 
+  logout() {
+    this.user.next(null);
+    this.router.navigate(['/auth/login']);
+    sessionStorage.removeItem('userData')
+    localStorage.removeItem('userData');
+  }
+
   private handleAuthentication(
     firstname: string,
     lastname: string,
@@ -90,8 +122,10 @@ export class AuthService {
     if (rememberMe) {
       sessionStorage.setItem('userData', JSON.stringify(user));
       localStorage.setItem('userData', JSON.stringify(user));
+      this.router.navigate(['/']);
     } else {
       sessionStorage.setItem('userData', JSON.stringify(user));
+      this.router.navigate(['/']);
     }
   }
 
@@ -106,6 +140,9 @@ export class AuthService {
         break;
       case 'Bad Request':
         errorMessage = 'Your credencials are not correct';
+        break;
+      case 'Conflict username exists':
+        errorMessage = 'You must change you username';
         break;
     }
     return throwError(errorMessage);
