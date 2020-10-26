@@ -29,6 +29,7 @@
   </div>
   <div *ngIf="onFavorites" class="pull-right">
     <button
+      (click)="remove()"
       class="btn btn-danger "
       style="
         padding-top: 4px;

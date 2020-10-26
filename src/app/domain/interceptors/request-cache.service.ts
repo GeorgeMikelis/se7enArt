@@ -13,6 +13,8 @@ export class RequestCache  {
     const url = req.urlWithParams;
     const cached = this.cache.get(url);
 
+    console.log(cached);
+
     if (!cached) {
       return undefined;
     }
@@ -24,7 +26,8 @@ export class RequestCache  {
 
   put(req: HttpRequest<any>, response: HttpResponse<any>): void {
     const url = req.url;
-    const entry = { url, response, lastRead: Date.now() };
+    const method = req.method;
+    const entry = { url, method, response, lastRead: Date.now() };
     this.cache.set(url, entry);
 
     const expired = Date.now() - maxAge;

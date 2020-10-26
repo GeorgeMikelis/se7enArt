@@ -23,7 +23,7 @@ import { CachingInterceptor } from './domain/interceptors/caching-interceptor.se
     MoviesModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: CachingInterceptor, multi: true },
+    // { provide: HTTP_INTERCEPTORS, useClass: CachingInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true},
     { provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptorService, multi: true }
   ],

@@ -20,6 +20,9 @@ export class FavoriteMoviesComponent implements OnInit {
       this.movies = movies;
       console.log(this.movies);
     })
+    this.moviesService.favoriteMovies.subscribe(movies => {
+      this.movies = movies
+    })
   }
 
   ngOnDestroy(): void {

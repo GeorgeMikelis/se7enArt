@@ -21,7 +21,11 @@ export class MovieItemComponent implements OnInit {
   }
 
   toFavorites() {
-    this.moviesService.manageFavorites(this.movie);
+    this.moviesService.addMovieToUserFavorites(this.movie);
+  }
+
+  remove() {
+    this.moviesService.removeMovieFromUserFavorites(this.movie.favoriteId);
   }
 
 }
