@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+
 import { Movie } from 'src/app/models/movie.model';
+
 
 @Component({
   selector: 'app-movie-item',
@@ -10,7 +12,7 @@ export class MovieItemComponent implements OnInit {
   @Input()
   movie: Movie;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
   }

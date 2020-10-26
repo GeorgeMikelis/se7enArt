@@ -11,6 +11,7 @@ import { MoviesSearchComponent } from './movies-search/movies-search.component';
 import { HeaderComponent } from './header/header.component';
 import { SharedModule } from '../shared/shared.module';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { MovieDetailsComponent } from './movie-details/movie-details.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     FavoriteMoviesComponent,
     MovieItemComponent,
     MoviesSearchComponent,
-    HeaderComponent
+    HeaderComponent,
+    MovieDetailsComponent
   ],
   imports: [CommonModule, MoviesRoutingModule, NgxPaginationModule, SharedModule],
 

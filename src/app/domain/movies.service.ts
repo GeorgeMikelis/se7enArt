@@ -18,4 +18,9 @@ export class MoviesService {
     let url = `${this.baseUrl}/${ApiPaths.getAllMovies}`;
     return this.http.get<Movie[]>(url);
   }
+
+  getMovie(id) {
+    let url = `${this.baseUrl}/${ApiPaths.getMovieById}${id}`;
+    return this.http.get<Movie>(url);
+  }
 }
