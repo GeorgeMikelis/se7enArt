@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { MoviesService } from 'src/app/domain/movies.service';
+import { Movie } from 'src/app/models/movie.model';
 
 @Component({
   selector: 'app-favorite-movies',
@@ -6,10 +9,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./favorite-movies.component.css']
 })
 export class FavoriteMoviesComponent implements OnInit {
+  movies: Movie[] = [];
+  subscription: Subscription;
+  p: number = 1;
 
-  constructor() { }
+  constructor(private moviesService: MoviesService) { }
 
   ngOnInit(): void {
+    this.subscription = this.moviesService.getUserFavoriteMovies().subscribe(movies => {
+      this.movies = movies;
+      console.log(this.movies);
+    })
   }
 
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 }

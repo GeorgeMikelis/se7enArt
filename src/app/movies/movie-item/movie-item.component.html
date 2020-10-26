@@ -1,1 +1,30 @@
-<li class="list-group-item"><a routerLink="/movie-details" [queryParams]="{id: movie.id}">{{ movie.title }}</a></li>
+<li class="list-group-item">
+  <span (click)="toFavorites()" appHeartHighlighter class="glyphicon glyphicon-heart" aria-hidden="true" style="color: gray; margin-right: 10px;"></span>
+  <a appMovieHighlighter routerLink="/movie-details" [queryParams]="{ id: movie.id }">{{
+    movie.title
+  }}</a>
+  <div *ngIf="!onFavorites" class="pull-right">
+    <button
+      class="btn btn-success "
+      style="
+        padding-top: 4px;
+        padding-bottom: 2px;
+        margin-left: 5px;
+        margin-right: 5px;
+      "
+    >
+      Update
+    </button>
+    <button
+      class="btn btn-danger "
+      style="
+        padding-top: 4px;
+        padding-bottom: 2px;
+        margin-left: 5px;
+        margin-right: 5px;
+      "
+    >
+      Delete
+    </button>
+  </div>
+</li>

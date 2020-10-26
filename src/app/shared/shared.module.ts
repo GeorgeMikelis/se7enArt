@@ -1,18 +1,25 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DropdownDirective } from './dropdown.directive';
+import { MovieHighlighterDirective } from './movie-highlighter.directive';
+import { HeartHighlighterDirective } from './heart-highlighter.directive';
+
 
 
 
 @NgModule({
   declarations: [
-    DropdownDirective
+    DropdownDirective,
+    MovieHighlighterDirective,
+    HeartHighlighterDirective
   ],
   imports: [
     CommonModule
   ],
   exports: [
-    DropdownDirective
+    DropdownDirective,
+    MovieHighlighterDirective,
+    HeartHighlighterDirective
   ]
 })
 export class SharedModule { }

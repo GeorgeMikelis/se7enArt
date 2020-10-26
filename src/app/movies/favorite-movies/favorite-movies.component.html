@@ -1,1 +1,12 @@
-<p>favorite-movies works!</p>
+<h2>Your Favorite Movies:</h2>
+
+<div class="row">
+  <div class="col-md-12">
+    <ul class="list-group" *ngIf="movies && movies.length">
+      <app-movie-item [onFavorites]="true" *ngFor="let movie of movies | paginate: { itemsPerPage: 10, currentPage: p }" [movie]="movie"></app-movie-item>
+    </ul>
+    <p *ngIf="!movies.length">Your list with your favorite movies is currently empty.</p>
+  </div>
+</div>
+
+<pagination-controls *ngIf="movies && movies.length" (pageChange)="p = $event"></pagination-controls>

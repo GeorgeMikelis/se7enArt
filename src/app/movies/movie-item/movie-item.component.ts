@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MoviesService } from 'src/app/domain/movies.service';
 
 import { Movie } from 'src/app/models/movie.model';
 
@@ -11,10 +12,16 @@ import { Movie } from 'src/app/models/movie.model';
 export class MovieItemComponent implements OnInit {
   @Input()
   movie: Movie;
+  @Input()
+  onFavorites: boolean;
 
-  constructor() {}
+  constructor(private moviesService: MoviesService) {}
 
   ngOnInit(): void {
+  }
+
+  toFavorites() {
+    this.moviesService.manageFavorites(this.movie);
   }
 
 }

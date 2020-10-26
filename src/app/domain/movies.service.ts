@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 import { ApiPaths } from '../enums/api-paths';
@@ -22,5 +22,14 @@ export class MoviesService {
   getMovie(id) {
     let url = `${this.baseUrl}/${ApiPaths.getMovieById}${id}`;
     return this.http.get<Movie>(url);
+  }
+
+  getUserFavoriteMovies(): Observable<Movie[]> {
+    let url = `${this.baseUrl}/${ApiPaths.getUserFavoriteMovies}`;
+    return this.http.get<Movie[]>(url);
+  }
+
+  manageFavorites(movie:Movie) {
+    console.log(movie);
   }
 }

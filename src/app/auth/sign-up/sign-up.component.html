@@ -69,5 +69,6 @@
     </div>
     <div *ngIf="!newUser">
         <button class="btn btn-primary" type="submit" [disabled]="!signupForm.valid">Update and Logout</button>
+        <a routerLink="/"> Or click here to cancel</a>
     </div>
 </form>
