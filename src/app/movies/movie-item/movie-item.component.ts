@@ -18,6 +18,9 @@ export class MovieItemComponent implements OnInit {
   constructor(private moviesService: MoviesService) {}
 
   ngOnInit(): void {
+    this.moviesService.favoriteMovies.subscribe(movies =>{
+
+    })
   }
 
   toFavorites() {

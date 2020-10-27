@@ -1,18 +1,26 @@
-import { Directive, ElementRef, HostListener } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 
 @Directive({
   selector: '[appHeartHighlighter]',
 })
 export class HeartHighlighterDirective {
+  @Input()
+  isFavorite: boolean;
+
   constructor(private elementReference: ElementRef) {}
 
   @HostListener('mouseenter')
   addHighlight() {
-    this.elementReference.nativeElement.style.color = 'red';
+    if (!this.isFavorite) {
+      this.elementReference.nativeElement.style.color = 'red';
+    }
   }
 
   @HostListener('mouseleave')
   removeHighlight() {
-    this.elementReference.nativeElement.style.color = 'gray';
+    if (!this.isFavorite) {
+      this.elementReference.nativeElement.style.color = 'gray';
+    }
+
   }
 }

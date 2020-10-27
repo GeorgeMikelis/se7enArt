@@ -28,7 +28,10 @@ export class MoviesService {
 
   getUserFavoriteMovies(): Observable<Movie[]> {
     let url = `${this.baseUrl}/${ApiPaths.getUserFavoriteMovies}`;
-    return this.http.get<Movie[]>(url);
+    return this.http.get<Movie[]>(url).pipe(tap(res => {
+      this.favoriteMovies.next(res);
+        console.log(`REMOVE${res}`);
+    }))
   }
 
   addMovieToUserFavorites(movie:Movie) {
@@ -40,10 +43,7 @@ export class MoviesService {
     console.log(movieId);
     let url = `${this.baseUrl}/${ApiPaths.removeFavoriteMovieByFavoriteId}${movieId}`
     return this.http.delete(url).subscribe(res => {
-      this.getUserFavoriteMovies().subscribe(res => {
-        this.favoriteMovies.next(res);
-        console.log(res);
-      });
+      this.getUserFavoriteMovies().subscribe()
     });
   }
 }

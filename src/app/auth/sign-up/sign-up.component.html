@@ -66,9 +66,10 @@
 
     <div *ngIf="newUser">
         <button class="btn btn-primary" type="submit" [disabled]="!signupForm.valid">SignUp</button>
+        <a routerLink="/auth/login" style="margin-left: 15px;">Or click here to login</a>
     </div>
     <div *ngIf="!newUser">
         <button class="btn btn-primary" type="submit" [disabled]="!signupForm.valid">Update and Logout</button>
-        <a routerLink="/"> Or click here to cancel</a>
+        <a routerLink="/" style="margin-left: 15px;">Or click here to cancel</a>
     </div>
 </form>

@@ -22,9 +22,11 @@ export interface AuthResponseData {
   providedIn: 'root',
 })
 export class AuthService {
-  userFromLocal = JSON.parse(localStorage.getItem('userData'))
+  userFromLocal = JSON.parse(localStorage.getItem('userData'));
   user = new BehaviorSubject<UserWithJWT>(this.userFromLocal);
   baseUrl = environment.baseUrl;
+  expirationDuration: number = 7200 * 1000;
+  private tokenExpirationTimer: any;
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -74,8 +76,7 @@ export class AuthService {
     return this.http.put<AuthResponseData>(url, body).pipe(
       catchError(this.habdleError),
       tap((resData) => {
-        console.log(resData),
-        this.logout();
+        console.log(resData), this.logout();
       })
     );
   }
@@ -102,11 +103,42 @@ export class AuthService {
     );
   }
 
+  autoLogin() {
+    const userData: UserWithJWT = JSON.parse(localStorage.getItem('userData'));
+    if (!userData) {
+        return;
+    }
+
+    const loadedUser = new UserWithJWT(
+        userData.firstname,
+        userData.lastname,
+        userData.username,
+        userData.id,
+        userData._jwt,
+        new Date(userData._jwtExpirationDate)
+    );
+
+    if (loadedUser.jwt) {
+        this.user.next(loadedUser);
+        this.autoLogout();
+    }
+}
+
   logout() {
     this.user.next(null);
     this.router.navigate(['/auth/login']);
-    sessionStorage.removeItem('userData')
+    sessionStorage.removeItem('userData');
     localStorage.removeItem('userData');
+    if (!this.tokenExpirationTimer) {
+      clearTimeout(this.tokenExpirationTimer);
+    }
+    this.tokenExpirationTimer = null;
+  }
+
+  autoLogout() {
+    this.tokenExpirationTimer = setTimeout(() => {
+      this.logout();
+    }, this.expirationDuration);
   }
 
   private handleAuthentication(
@@ -117,8 +149,12 @@ export class AuthService {
     jwt: string,
     rememberMe: boolean
   ) {
-    const user = new UserWithJWT(firstname, lastname, username, id, jwt);
+    const expirationDate = new Date(
+      new Date().getTime() + this.expirationDuration
+    );
+    const user = new UserWithJWT(firstname, lastname, username, id, jwt, expirationDate);
     this.user.next(user);
+    this.autoLogout();
     if (rememberMe) {
       sessionStorage.setItem('userData', JSON.stringify(user));
       localStorage.setItem('userData', JSON.stringify(user));

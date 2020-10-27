@@ -12,7 +12,6 @@ import { Movie } from 'src/app/models/movie.model';
 })
 export class MovieDetailsComponent implements OnInit, OnDestroy {
   subscritption: Subscription;
-  movie: Movie;
   movie$: Observable<Movie>
 
   constructor(
@@ -27,9 +26,7 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
     const movieId = this.route.snapshot.queryParams['id'];
     console.log(movieId);
     this.movie$ = this.moviesService.getMovie(movieId);
-    this.subscritption = this.movie$.subscribe(movie => {
-      this.movie = new Movie(movie.id, movie.title, movie.description, movie.dateReleased);
-    });
+    this.subscritption = this.movie$.subscribe();
   }
 
   ngOnDestroy() {

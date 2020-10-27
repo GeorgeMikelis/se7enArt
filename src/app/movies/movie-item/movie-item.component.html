@@ -1,5 +1,5 @@
 <li class="list-group-item">
-  <span *ngIf="!onFavorites" (click)="toFavorites()" appHeartHighlighter class="glyphicon glyphicon-heart" aria-hidden="true" style="color: gray; margin-right: 10px;"></span>
+  <span *ngIf="!onFavorites" (click)="toFavorites()" appHeartHighlighter [isFavorite]="onFavorites" class="glyphicon glyphicon-heart" aria-hidden="true" style="color: gray; margin-right: 10px;"></span>
   <a appMovieHighlighter routerLink="/movie-details" [queryParams]="{ id: movie.id }">{{
     movie.title
   }}</a>
