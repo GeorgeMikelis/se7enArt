@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-12">
     <h2>{{ (movie$ | async)?.title }}</h2>
-    <p>{{ (movie$ | async)?.title }} was released in {{ (movie$ | async)?.dateReleased | date:'medium'}}</p>
+    <p>{{ (movie$ | async)?.title }} was released in {{ (movie$ | async)?.dateReleased | date:'yyyy'}}</p>
     <p>{{ (movie$ | async)?.description }}</p>
   </div>
 </div>

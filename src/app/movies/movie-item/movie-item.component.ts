@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { MoviesService } from 'src/app/domain/movies.service';
 
 import { Movie } from 'src/app/models/movie.model';
@@ -12,15 +13,20 @@ import { Movie } from 'src/app/models/movie.model';
 export class MovieItemComponent implements OnInit {
   @Input()
   movie: Movie;
+
   @Input()
   onFavorites: boolean;
+
+  @Input()
+  favoriteMovies: Movie[];
 
   constructor(private moviesService: MoviesService) {}
 
   ngOnInit(): void {
-    this.moviesService.favoriteMovies.subscribe(movies =>{
-
-    })
+    // for (let i; i < this.favoriteMovies.length; i++) {
+    //   this.movie.id === this.favoriteMovies[i].id ? this.onFavorites = true : this.onFavorites = null;
+    // }
+    // console.log(this.onFavorites)
   }
 
   toFavorites() {
@@ -30,5 +36,4 @@ export class MovieItemComponent implements OnInit {
   remove() {
     this.moviesService.removeMovieFromUserFavorites(this.movie.favoriteId);
   }
-
 }

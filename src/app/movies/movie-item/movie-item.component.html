@@ -1,11 +1,21 @@
 <li class="list-group-item">
-  <span *ngIf="!onFavorites" (click)="toFavorites()" appHeartHighlighter [isFavorite]="onFavorites" class="glyphicon glyphicon-heart" aria-hidden="true" style="color: gray; margin-right: 10px;"></span>
-  <a appMovieHighlighter routerLink="/movie-details" [queryParams]="{ id: movie.id }">{{
-    movie.title
-  }}</a>
+  <span
+    (click)="toFavorites()"
+    appHeartHighlighter
+    [isFavorite]="onFavorites"
+    class="glyphicon glyphicon-heart"
+    aria-hidden="true"
+    style="color: gray; margin-right: 10px"
+  ></span>
+  <a
+    appMovieHighlighter
+    routerLink="/movie-details"
+    [queryParams]="{ id: movie.id }"
+    >{{ movie.title }} ({{ movie.dateReleased | date: 'yyyy' }})</a
+  >
   <div *ngIf="!onFavorites" class="pull-right">
     <button
-      class="btn btn-success "
+      class="btn btn-success"
       style="
         padding-top: 4px;
         padding-bottom: 2px;
@@ -16,7 +26,7 @@
       Update
     </button>
     <button
-      class="btn btn-danger "
+      class="btn btn-danger"
       style="
         padding-top: 4px;
         padding-bottom: 2px;
@@ -30,7 +40,7 @@
   <div *ngIf="onFavorites" class="pull-right">
     <button
       (click)="remove()"
-      class="btn btn-danger "
+      class="btn btn-danger"
       style="
         padding-top: 4px;
         padding-bottom: 2px;
