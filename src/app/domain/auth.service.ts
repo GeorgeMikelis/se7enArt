@@ -25,7 +25,7 @@ export class AuthService {
   userFromLocal = JSON.parse(localStorage.getItem('userData'));
   user = new BehaviorSubject<UserWithJWT>(this.userFromLocal);
   baseUrl = environment.baseUrl;
-  expirationDuration: number = 7200 * 1000;
+  fresh2HoursDuration: number = 7200 * 1000;
   private tokenExpirationTimer: any;
 
   constructor(private http: HttpClient, private router: Router) {}
@@ -120,7 +120,8 @@ export class AuthService {
 
     if (loadedUser.jwt) {
         this.user.next(loadedUser);
-        this.autoLogout();
+        const remainingDuration = new Date(userData._jwtExpirationDate).getTime() - new Date().getTime()
+        this.autoLogout(remainingDuration);
     }
 }
 
@@ -135,10 +136,10 @@ export class AuthService {
     this.tokenExpirationTimer = null;
   }
 
-  autoLogout() {
+  autoLogout(expirationDuration: number) {
     this.tokenExpirationTimer = setTimeout(() => {
       this.logout();
-    }, this.expirationDuration);
+    }, expirationDuration);
   }
 
   private handleAuthentication(
@@ -150,11 +151,11 @@ export class AuthService {
     rememberMe: boolean
   ) {
     const expirationDate = new Date(
-      new Date().getTime() + this.expirationDuration
+      new Date().getTime() + this.fresh2HoursDuration
     );
     const user = new UserWithJWT(firstname, lastname, username, id, jwt, expirationDate);
     this.user.next(user);
-    this.autoLogout();
+    this.autoLogout(this.fresh2HoursDuration);
     if (rememberMe) {
       sessionStorage.setItem('userData', JSON.stringify(user));
       localStorage.setItem('userData', JSON.stringify(user));
