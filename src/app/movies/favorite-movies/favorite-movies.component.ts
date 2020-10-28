@@ -12,6 +12,9 @@ export class FavoriteMoviesComponent implements OnInit {
   movies: Movie[] = [];
   subscription: Subscription;
   behevSubFavMovSub: Subscription;
+
+  searchHappened: boolean = false;
+
   p: number = 1;
 
   constructor(private moviesService: MoviesService) { }
@@ -24,6 +27,19 @@ export class FavoriteMoviesComponent implements OnInit {
     this.behevSubFavMovSub = this.moviesService.favoriteMovies.subscribe(movies => {
       this.movies = movies
     })
+  }
+
+  search(movieTitle: string) {
+    if (movieTitle === '') {
+      this.searchHappened = false;
+    }
+    if (movieTitle.length) {
+      this.searchHappened = true;
+    }
+    console.log(movieTitle);
+    this.moviesService.getUserFavoriteMovies(movieTitle).subscribe((res) => {
+      console.log(res);
+    });
   }
 
   ngOnDestroy(): void {

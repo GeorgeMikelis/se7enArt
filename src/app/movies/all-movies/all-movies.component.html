@@ -1,5 +1,7 @@
-<h2>All the Movies:</h2>
+<app-movies-search (userInput)="search($event)" ></app-movies-search>
 
+<h2 *ngIf="!searchHappened">All the Movies:</h2>
+<h2 *ngIf="searchHappened">Your Search Results:</h2>
 <div class="row">
   <div class="col-md-12">
     <ul class="list-group" *ngIf="movies && movies.length">

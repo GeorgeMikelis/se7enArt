@@ -1,1 +1,23 @@
-<p>movies-search works!</p>
+<div class="row">
+  <div class="col-md-3">
+    <div class="form-group">
+      <input #input [placeholder]="onFavorites ? 'Search favorite movies by title' : 'Search movies by title'" class="form-control" />
+    </div>
+  </div>
+  <div class="col-md-2">
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="userInput.emit(input.value)"
+    >
+      Search
+    </button> |
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="userInput.emit('')"
+    >
+      Cancel
+    </button>
+  </div>
+</div>

@@ -6,7 +6,7 @@ import { Movie } from 'src/app/models/movie.model';
 @Component({
   selector: 'app-all-movies',
   templateUrl: './all-movies.component.html',
-  styleUrls: ['./all-movies.component.css']
+  styleUrls: ['./all-movies.component.css'],
 })
 export class AllMoviesComponent implements OnInit, OnDestroy {
   movies: Movie[];
@@ -16,26 +16,60 @@ export class AllMoviesComponent implements OnInit, OnDestroy {
   favoriteMoviesSub: Subscription;
   behevSubFavMovSub: Subscription;
 
+  searchHappened: boolean = false;
+
   p: number = 1;
 
   constructor(private moviesService: MoviesService) {}
 
   ngOnInit(): void {
-    this.moviesSubscription = this.moviesService.getMovies().subscribe(movies => {
+    this.moviesSubscription = this.moviesService
+      .getMovies()
+      .subscribe((movies) => {
+        this.movies = movies;
+        console.log(this.movies);
+      });
+    this.behevSubMoviesSub = this.moviesService.movies.subscribe((movies) => {
       this.movies = movies;
-      console.log(this.movies);
-    })
-    this.behevSubMoviesSub = this.moviesService.movies.subscribe(movies => {
-      this.movies = movies;
-    })
-    this.favoriteMoviesSub = this.moviesService.getUserFavoriteMovies().subscribe(movies => {
-      this.favoriteMovies = movies;
-      console.log(this.favoriteMovies);
-    })
-    this.behevSubFavMovSub = this.moviesService.favoriteMovies.subscribe(movies => {
-      this.favoriteMovies = movies;
-    })
+    });
+    this.favoriteMoviesSub = this.moviesService
+      .getUserFavoriteMovies()
+      .subscribe((movies) => {
+        this.favoriteMovies = movies;
+        console.log(this.favoriteMovies);
+      });
+    this.behevSubFavMovSub = this.moviesService.favoriteMovies.subscribe(
+      (movies) => {
+        this.favoriteMovies = movies;
+      }
+    );
     console.log(this.movies);
+  }
+
+  isFavorite(id): boolean {
+    if (this.favoriteMovies.map((movie) => movie.id).includes(id)) {
+      this.movies.find(
+        (movie) => movie.id === id
+      ).favoriteId = this.favoriteMovies.find(
+        (movie) => movie.id === id
+      ).favoriteId;
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  search(movieTitle: string) {
+    if (movieTitle === '') {
+      this.searchHappened = false;
+    }
+    if (movieTitle.length) {
+      this.searchHappened = true;
+    }
+    console.log(movieTitle);
+    this.moviesService.getMovies(movieTitle).subscribe((res) => {
+      console.log(res);
+    });
   }
 
   ngOnDestroy(): void {
@@ -43,15 +77,5 @@ export class AllMoviesComponent implements OnInit, OnDestroy {
     this.behevSubMoviesSub.unsubscribe();
     this.favoriteMoviesSub.unsubscribe();
     this.behevSubFavMovSub.unsubscribe();
-  }
-
-  isFavorite(id): boolean {
-    if (this.favoriteMovies.map(movie => movie.id).includes(id)) {
-      this.movies.find(movie => movie.id === id).favoriteId = this.favoriteMovies.find(movie => movie.id === id).favoriteId;
-      return true;
-    } else {
-      return false;
-    }
-
   }
 }

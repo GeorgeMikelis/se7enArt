@@ -17,13 +17,25 @@ export class MoviesService {
 
   constructor(private http: HttpClient) {}
 
-  getMovies(): Observable<Movie[]> {
+  getMovies(title?: string): Observable<Movie[]> {
     let url = `${this.baseUrl}/${ApiPaths.getAllMovies}`;
-    return this.http.get<Movie[]>(url).pipe(
-      tap((res) => {
-        this.movies.next(res);
-      })
-    );
+    if (title) {
+      return this.http.get<Movie[]>(url, {
+        params: {
+          title: title
+        }
+      }).pipe(
+        tap((res) => {
+          this.movies.next(res);
+        })
+      );
+    } else {
+      return this.http.get<Movie[]>(url).pipe(
+        tap((res) => {
+          this.movies.next(res);
+        })
+      );
+    }
   }
 
   getMovie(id) {
@@ -50,14 +62,27 @@ export class MoviesService {
     });
   }
 
-  getUserFavoriteMovies(): Observable<Movie[]> {
+  getUserFavoriteMovies(title?: string): Observable<Movie[]> {
     let url = `${this.baseUrl}/${ApiPaths.getUserFavoriteMovies}`;
-    return this.http.get<Movie[]>(url).pipe(
-      tap((res) => {
-        this.favoriteMovies.next(res);
-        console.log(`REMOVE${res}`);
-      })
-    );
+    if (title) {
+      return this.http.get<Movie[]>(url, {
+        params: {
+          title: title
+        }
+      }).pipe(
+        tap((res) => {
+          this.favoriteMovies.next(res);
+          console.log(`REMOVE${res}`);
+        })
+      );
+    } else {
+      return this.http.get<Movie[]>(url).pipe(
+        tap((res) => {
+          this.favoriteMovies.next(res);
+          console.log(`REMOVE${res}`);
+        })
+      );
+    }
   }
 
   addMovieToUserFavorites(movie: Movie) {
