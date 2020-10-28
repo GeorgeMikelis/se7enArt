@@ -11,6 +11,7 @@ import { Movie } from 'src/app/models/movie.model';
 export class AllMoviesComponent implements OnInit, OnDestroy {
   movies: Movie[];
   moviesSubscription: Subscription;
+  behevSubMoviesSub: Subscription;
   favoriteMovies: Movie[];
   favoriteMoviesSub: Subscription;
   behevSubFavMovSub: Subscription;
@@ -24,6 +25,9 @@ export class AllMoviesComponent implements OnInit, OnDestroy {
       this.movies = movies;
       console.log(this.movies);
     })
+    this.behevSubMoviesSub = this.moviesService.movies.subscribe(movies => {
+      this.movies = movies;
+    })
     this.favoriteMoviesSub = this.moviesService.getUserFavoriteMovies().subscribe(movies => {
       this.favoriteMovies = movies;
       console.log(this.favoriteMovies);
@@ -32,18 +36,19 @@ export class AllMoviesComponent implements OnInit, OnDestroy {
       this.favoriteMovies = movies;
     })
 
-    for (let i; i < this.movies.length; i++) {
-      for (let j; j < this.favoriteMovies.length; j++) {
-        if (this.movies[i].id === this.favoriteMovies[j].id) {
-          this.movies[i].favoriteId = this.favoriteMovies[j].favoriteId;
-        }
-      }
-    }
+    // for (let i; i < this.movies.length; i++) {
+    //   for (let j; j < this.favoriteMovies.length; j++) {
+    //     if (this.movies[i].id === this.favoriteMovies[j].id) {
+    //       this.movies[i].favoriteId = this.favoriteMovies[j].favoriteId;
+    //     }
+    //   }
+    // }
     console.log(this.movies);
   }
 
   ngOnDestroy(): void {
     this.moviesSubscription.unsubscribe();
+    this.behevSubMoviesSub.unsubscribe();
     this.favoriteMoviesSub.unsubscribe();
     this.behevSubFavMovSub.unsubscribe();
   }

@@ -23,7 +23,7 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
   }
 
   getMovieById() {
-    const movieId = this.route.snapshot.queryParams['id'];
+    const movieId = this.route.snapshot.params['id'];
     console.log(movieId);
     this.movie$ = this.moviesService.getMovie(movieId);
     this.subscritption = this.movie$.subscribe();

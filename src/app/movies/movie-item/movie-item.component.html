@@ -9,12 +9,12 @@
   ></span>
   <a
     appMovieHighlighter
-    routerLink="/movie-details"
-    [queryParams]="{ id: movie.id }"
+    [routerLink]="'/movie-details/' + movie.id"
     >{{ movie.title }} ({{ movie.dateReleased | date: 'yyyy' }})</a
   >
   <div *ngIf="!onFavorites" class="pull-right">
     <button
+      (click)="onUpdate()"
       class="btn btn-success"
       style="
         padding-top: 4px;
@@ -26,6 +26,7 @@
       Update
     </button>
     <button
+      (click)="onDelete()"
       class="btn btn-danger"
       style="
         padding-top: 4px;
@@ -39,7 +40,7 @@
   </div>
   <div *ngIf="onFavorites" class="pull-right">
     <button
-      (click)="remove()"
+      (click)="onRemove()"
       class="btn btn-danger"
       style="
         padding-top: 4px;

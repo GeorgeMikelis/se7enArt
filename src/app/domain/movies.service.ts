@@ -12,13 +12,18 @@ import { Movie } from '../models/movie.model';
 })
 export class MoviesService {
   favoriteMovies = new BehaviorSubject<Movie[]>([]);
+  movies = new BehaviorSubject<Movie[]>([]);
   baseUrl = environment.baseUrl;
 
   constructor(private http: HttpClient) {}
 
   getMovies(): Observable<Movie[]> {
     let url = `${this.baseUrl}/${ApiPaths.getAllMovies}`;
-    return this.http.get<Movie[]>(url);
+    return this.http.get<Movie[]>(url).pipe(
+      tap((res) => {
+        this.movies.next(res);
+      })
+    );
   }
 
   getMovie(id) {
@@ -26,24 +31,33 @@ export class MoviesService {
     return this.http.get<Movie>(url);
   }
 
-  getUserFavoriteMovies(): Observable<Movie[]> {
-    let url = `${this.baseUrl}/${ApiPaths.getUserFavoriteMovies}`;
-    return this.http.get<Movie[]>(url).pipe(tap(res => {
-      this.favoriteMovies.next(res);
-        console.log(`REMOVE${res}`);
-    }))
+  deleteMovie(id) {
+    let url = `${this.baseUrl}/${ApiPaths.updateMovieById}${id}`;
+    return this.http.delete(url).subscribe((res) => {
+      this.getMovies().subscribe();
+    });
   }
 
-  addMovieToUserFavorites(movie:Movie) {
-    let url = `${this.baseUrl}/${ApiPaths.addFavoriteMovie}`
-    return this.http.post(url, {movieId: movie.id}).subscribe();
+  getUserFavoriteMovies(): Observable<Movie[]> {
+    let url = `${this.baseUrl}/${ApiPaths.getUserFavoriteMovies}`;
+    return this.http.get<Movie[]>(url).pipe(
+      tap((res) => {
+        this.favoriteMovies.next(res);
+        console.log(`REMOVE${res}`);
+      })
+    );
+  }
+
+  addMovieToUserFavorites(movie: Movie) {
+    let url = `${this.baseUrl}/${ApiPaths.addFavoriteMovie}`;
+    return this.http.post(url, { movieId: movie.id }).subscribe();
   }
 
   removeMovieFromUserFavorites(movieId) {
     console.log(movieId);
-    let url = `${this.baseUrl}/${ApiPaths.removeFavoriteMovieByFavoriteId}${movieId}`
-    return this.http.delete(url).subscribe(res => {
-      this.getUserFavoriteMovies().subscribe()
+    let url = `${this.baseUrl}/${ApiPaths.removeFavoriteMovieByFavoriteId}${movieId}`;
+    return this.http.delete(url).subscribe((res) => {
+      this.getUserFavoriteMovies().subscribe();
     });
   }
 }

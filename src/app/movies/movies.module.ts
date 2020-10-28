@@ -12,6 +12,7 @@ import { HeaderComponent } from './header/header.component';
 import { SharedModule } from '../shared/shared.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MovieDetailsComponent } from './movie-details/movie-details.component';
+import { MovieUpdateComponent } from './movie-update/movie-update.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { MovieDetailsComponent } from './movie-details/movie-details.component';
     MovieItemComponent,
     MoviesSearchComponent,
     HeaderComponent,
-    MovieDetailsComponent
+    MovieDetailsComponent,
+    MovieUpdateComponent
   ],
   imports: [CommonModule, MoviesRoutingModule, NgxPaginationModule, SharedModule],
 
