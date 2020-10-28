@@ -1,4 +1,5 @@
 <h2 *ngIf="!newMovie">Here you can edit the movie: "{{ (movie$ | async)?.title }}"</h2>
+<h2 *ngIf="newMovie">Here you can create a new movie</h2>
 <div class="row">
   <div class="col-md-12">
     <form [formGroup]="movieForm" (ngSubmit)="onSubmit()">
@@ -17,7 +18,7 @@
         <label for="dateReleased">Year of release</label>
         <input
           formControlName="dateReleased"
-          type="text"
+          type="number"
           id="dateReleased"
           class="form-control"
           name="dateReleased"
@@ -37,11 +38,20 @@
       </div>
       <div>
         <button
+          *ngIf="!newMovie"
           class="btn btn-primary"
           type="submit"
           [disabled]="!movieForm.valid"
         >
           Update
+        </button>
+        <button
+          *ngIf="newMovie"
+          class="btn btn-primary"
+          type="submit"
+          [disabled]="!movieForm.valid"
+        >
+          Create
         </button>
         <a routerLink="/all-movies" style="margin-left: 15px"
           >Or click here to cancel</a

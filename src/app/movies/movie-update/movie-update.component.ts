@@ -59,7 +59,7 @@ export class MovieUpdateComponent implements OnInit, OnDestroy {
       this.movie = movie;
 
       this.movieForm.patchValue({
-        dateReleased: this.movie.dateReleased,
+        dateReleased: new Date(this.movie.dateReleased).getFullYear(),
         description: this.movie.description
       });
 
@@ -68,13 +68,20 @@ export class MovieUpdateComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    const restOfDate: string = '-10-20T20:02:09.404Z';
+    const date: string = this.movieForm.value.dateReleased.toString();
+
     let title = this.movieForm.value.title;
     let description = this.movieForm.value.description;
-    let dateReleased = this.movieForm.value.dateReleased;
+    let dateReleased: string = `${date}${restOfDate}`
 
     console.log(this.movieForm.value)
+    if (this.newMovie) {
+      this.moviesService.createMovie(title, description, dateReleased);
+    } else {
+      this.moviesService.updateMovie(this.movie.id, title, description, dateReleased);
+    }
 
-    this.moviesService.updateMovie(this.movie.id, title, description, dateReleased);
     this.router.navigate(['/all-movies']);
   }
 

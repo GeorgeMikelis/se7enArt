@@ -43,6 +43,16 @@ export class MoviesService {
     return this.http.get<Movie>(url);
   }
 
+  createMovie(title, description, dateReleased) {
+    let url = `${this.baseUrl}/${ApiPaths.createMovie}`
+    let body = {
+      title: title,
+      description: description,
+      dateReleased: dateReleased
+    };
+    return this.http.post<Movie>(url, body).subscribe();
+  }
+
   updateMovie(id, title, description, dateReleased) {
     let url = `${this.baseUrl}/${ApiPaths.updateMovieById}${id}`;
     let body = {
