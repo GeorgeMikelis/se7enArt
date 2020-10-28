@@ -1,18 +1,20 @@
 <li class="list-group-item">
   <span
-    (click)="toFavorites()"
-    appHeartHighlighter
-    [isFavorite]="onFavorites"
-    class="glyphicon glyphicon-heart"
-    aria-hidden="true"
-    style="color: gray; margin-right: 10px"
+  *ngIf="fromAllMovies"
+  (click)="manageFavorites()"
+  appHeartHighlighter
+  [isFavorite]="onFavorites"
+  class="glyphicon glyphicon-heart"
+  aria-hidden="true"
+  style="color: gray; margin-right: 10px"
+  [ngStyle]="{ 'color' : (onFavorites) ? 'red' : 'gray' }"
   ></span>
   <a
     appMovieHighlighter
     [routerLink]="'/movie-details/' + movie.id"
     >{{ movie.title }} ({{ movie.dateReleased | date: 'yyyy' }})</a
   >
-  <div *ngIf="!onFavorites" class="pull-right">
+  <div *ngIf="fromAllMovies" class="pull-right">
     <button
       (click)="onUpdate()"
       class="btn btn-success"
@@ -38,9 +40,9 @@
       Delete
     </button>
   </div>
-  <div *ngIf="onFavorites" class="pull-right">
+  <div *ngIf="!fromAllMovies" class="pull-right">
     <button
-      (click)="onRemove()"
+      (click)="manageFavorites()"
       class="btn btn-danger"
       style="
         padding-top: 4px;

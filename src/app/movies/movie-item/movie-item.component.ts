@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { MoviesService } from 'src/app/domain/movies.service';
@@ -17,23 +17,24 @@ export class MovieItemComponent implements OnInit {
   onFavorites: boolean;
 
   @Input()
-  favoriteMovies: Movie[];
+  fromAllMovies: boolean;
 
   constructor(private moviesService: MoviesService, private router: Router) {}
 
   ngOnInit(): void {
-    // for (let i; i < this.favoriteMovies.length; i++) {
-    //   this.movie.id === this.favoriteMovies[i].id ? this.onFavorites = true : this.onFavorites = null;
-    // }
-    // console.log(this.onFavorites)
   }
 
-  toFavorites() {
-    this.moviesService.addMovieToUserFavorites(this.movie);
-  }
-
-  onRemove() {
-    this.moviesService.removeMovieFromUserFavorites(this.movie.favoriteId);
+  manageFavorites() {
+    console.log(this.onFavorites);
+    if (this.onFavorites) {
+      this.moviesService.removeMovieFromUserFavorites(this.movie.favoriteId);
+      this.onFavorites = false;
+    } else {
+      this.moviesService.addMovieToUserFavorites(this.movie).subscribe(res => {
+        this.movie.favoriteId = res.id;
+      });
+      this.onFavorites = true;
+    }
   }
 
   onUpdate() {

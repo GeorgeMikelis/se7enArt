@@ -50,7 +50,12 @@ export class MoviesService {
 
   addMovieToUserFavorites(movie: Movie) {
     let url = `${this.baseUrl}/${ApiPaths.addFavoriteMovie}`;
-    return this.http.post(url, { movieId: movie.id }).subscribe();
+    return this.http.post<
+    {
+      id: string,
+      movieId: string,
+      userId: string
+    }>(url, { movieId: movie.id });
   }
 
   removeMovieFromUserFavorites(movieId) {

@@ -35,14 +35,6 @@ export class AllMoviesComponent implements OnInit, OnDestroy {
     this.behevSubFavMovSub = this.moviesService.favoriteMovies.subscribe(movies => {
       this.favoriteMovies = movies;
     })
-
-    // for (let i; i < this.movies.length; i++) {
-    //   for (let j; j < this.favoriteMovies.length; j++) {
-    //     if (this.movies[i].id === this.favoriteMovies[j].id) {
-    //       this.movies[i].favoriteId = this.favoriteMovies[j].favoriteId;
-    //     }
-    //   }
-    // }
     console.log(this.movies);
   }
 
@@ -51,5 +43,15 @@ export class AllMoviesComponent implements OnInit, OnDestroy {
     this.behevSubMoviesSub.unsubscribe();
     this.favoriteMoviesSub.unsubscribe();
     this.behevSubFavMovSub.unsubscribe();
+  }
+
+  isFavorite(id): boolean {
+    if (this.favoriteMovies.map(movie => movie.id).includes(id)) {
+      this.movies.find(movie => movie.id === id).favoriteId = this.favoriteMovies.find(movie => movie.id === id).favoriteId;
+      return true;
+    } else {
+      return false;
+    }
+
   }
 }

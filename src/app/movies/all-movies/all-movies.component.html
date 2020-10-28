@@ -3,7 +3,7 @@
 <div class="row">
   <div class="col-md-12">
     <ul class="list-group" *ngIf="movies && movies.length">
-      <app-movie-item *ngFor="let movie of movies | paginate: { itemsPerPage: 10, currentPage: p }" [movie]="movie" [favoriteMovies]="favoriteMovies"></app-movie-item>
+      <app-movie-item *ngFor="let movie of movies | paginate: { itemsPerPage: 10, currentPage: p }" [movie]="movie" [fromAllMovies]="true" [onFavorites]="isFavorite(movie.id)"></app-movie-item>
     </ul>
   </div>
 </div>
