@@ -28,6 +28,9 @@ const routes: Routes = [
       },
       {
         path: 'movie-update/:id', component: MovieUpdateComponent
+      },
+      {
+        path: 'movie-update/creation', component: MovieUpdateComponent
       }
     ]
   }

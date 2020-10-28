@@ -1,4 +1,4 @@
-<h2>Here you can edit the movie: "{{ (movie$ | async)?.title }}"</h2>
+<h2 *ngIf="!newMovie">Here you can edit the movie: "{{ (movie$ | async)?.title }}"</h2>
 <div class="row">
   <div class="col-md-12">
     <form [formGroup]="movieForm" (ngSubmit)="onSubmit()">

@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MoviesService } from 'src/app/domain/movies.service';
 import { Movie } from 'src/app/models/movie.model';
@@ -20,7 +21,7 @@ export class AllMoviesComponent implements OnInit, OnDestroy {
 
   p: number = 1;
 
-  constructor(private moviesService: MoviesService) {}
+  constructor(private moviesService: MoviesService, private router: Router) {}
 
   ngOnInit(): void {
     this.moviesSubscription = this.moviesService
@@ -70,6 +71,10 @@ export class AllMoviesComponent implements OnInit, OnDestroy {
     this.moviesService.getMovies(movieTitle).subscribe((res) => {
       console.log(res);
     });
+  }
+
+  onCreate() {
+    this.router.navigate(['movie-update/creation'])
   }
 
   ngOnDestroy(): void {

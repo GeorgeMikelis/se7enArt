@@ -15,6 +15,10 @@ export class MovieUpdateComponent implements OnInit, OnDestroy {
   movie$: Observable<Movie>;
   movie: Movie;
 
+  currentUrl: string;
+
+  newMovie: boolean;
+
   movieForm = new FormGroup({
     title: new FormControl('', [Validators.required]),
     dateReleased: new FormControl('', [Validators.required]),
@@ -37,13 +41,14 @@ export class MovieUpdateComponent implements OnInit, OnDestroy {
     private moviesService: MoviesService) {}
 
   ngOnInit(): void {
-    this.getMovieById();
+    this.currentUrl = this.router.url;
 
-    // this.movieForm.patchValue({
-    //   title: this.movie?.title,
-    //   dateReleased: this.movie?.dateReleased,
-    //   description: this.movie?.description,
-    // });
+    if (this.currentUrl !== '/movie-update/creation') {
+      this.getMovieById();
+    } else {
+      this.newMovie = true;
+    }
+    console.log(this.newMovie);
   }
 
   getMovieById() {
@@ -74,6 +79,10 @@ export class MovieUpdateComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscritption.unsubscribe();
+    if (this.currentUrl !== '/movie-update/creation') {
+      this.subscritption.unsubscribe();
+    } else {
+      return;
+    }
   }
 }

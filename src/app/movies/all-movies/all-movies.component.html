@@ -1,15 +1,29 @@
-<app-movies-search (userInput)="search($event)" ></app-movies-search>
+<app-movies-search (userInput)="search($event)"></app-movies-search>
 
 <h2 *ngIf="!searchHappened">All the Movies:</h2>
 <h2 *ngIf="searchHappened">Your Search Results:</h2>
 <div class="row">
   <div class="col-md-12">
     <ul class="list-group" *ngIf="movies && movies.length">
-      <app-movie-item *ngFor="let movie of movies | paginate: { itemsPerPage: 10, currentPage: p }" [movie]="movie" [fromAllMovies]="true" [onFavorites]="isFavorite(movie.id)"></app-movie-item>
+      <app-movie-item
+        *ngFor="
+          let movie of movies | paginate: { itemsPerPage: 10, currentPage: p }
+        "
+        [movie]="movie"
+        [fromAllMovies]="true"
+        [onFavorites]="isFavorite(movie.id)"
+      ></app-movie-item>
     </ul>
   </div>
 </div>
 
 <pagination-controls (pageChange)="p = $event"></pagination-controls>
 
-
+<div class="row">
+  <div class="col-md-7">
+    <h3>You can add a new movie to the list by clicking create:</h3>
+  </div>
+  <div class="col-md-2" style="margin-top: 15px;">
+    <button class="btn btn-success" (click)="onCreate()">Create</button>
+  </div>
+</div>
