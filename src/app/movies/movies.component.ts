@@ -7,20 +7,11 @@ import { AuthService } from '../domain/auth.service';
   templateUrl: './movies.component.html',
   styleUrls: ['./movies.component.css']
 })
-export class MoviesComponent implements OnInit, OnDestroy {
-  isAuthenticated: boolean = false;
-  private userSub: Subscription;
+export class MoviesComponent implements OnInit {
 
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.userSub = this.authService.user.subscribe(user => {
-      this.isAuthenticated = !!user;
-    })
+    // this.authService.autoLogin();
   }
-
-  ngOnDestroy(): void {
-    this.userSub.unsubscribe();
-  }
-
 }

@@ -122,6 +122,8 @@ export class AuthService {
         this.user.next(loadedUser);
         const remainingDuration = new Date(userData._jwtExpirationDate).getTime() - new Date().getTime()
         this.autoLogout(remainingDuration);
+    } else {
+      this.logout();
     }
 }
 
