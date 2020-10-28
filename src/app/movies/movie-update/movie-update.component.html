@@ -1,1 +1,52 @@
-<p>movie-update works!</p>
+<h2>Here you can edit the movie: "{{ (movie$ | async)?.title }}"</h2>
+<div class="row">
+  <div class="col-md-12">
+    <form [formGroup]="movieForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input
+          formControlName="title"
+          type="text"
+          id="title"
+          class="form-control"
+          name="title"
+          [value]="(this.movie$ | async)?.title"
+          required
+        />
+
+        <label for="dateReleased">Year of release</label>
+        <input
+          formControlName="dateReleased"
+          type="text"
+          id="dateReleased"
+          class="form-control"
+          name="dateReleased"
+          required
+        />
+
+        <label for="description">Description</label>
+        <textarea
+          formControlName="description"
+          name="description"
+          id="description"
+          cols="30"
+          rows="10"
+          class="form-control"
+          required
+        ></textarea>
+      </div>
+      <div>
+        <button
+          class="btn btn-primary"
+          type="submit"
+          [disabled]="!movieForm.valid"
+        >
+          Update
+        </button>
+        <a routerLink="/all-movies" style="margin-left: 15px"
+          >Or click here to cancel</a
+        >
+      </div>
+    </form>
+  </div>
+</div>

@@ -13,6 +13,7 @@ import { SharedModule } from '../shared/shared.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MovieDetailsComponent } from './movie-details/movie-details.component';
 import { MovieUpdateComponent } from './movie-update/movie-update.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,9 +25,15 @@ import { MovieUpdateComponent } from './movie-update/movie-update.component';
     MoviesSearchComponent,
     HeaderComponent,
     MovieDetailsComponent,
-    MovieUpdateComponent
+    MovieUpdateComponent,
   ],
-  imports: [CommonModule, MoviesRoutingModule, NgxPaginationModule, SharedModule],
-
+  imports: [
+    CommonModule,
+    MoviesRoutingModule,
+    NgxPaginationModule,
+    SharedModule,
+    FormsModule,
+    ReactiveFormsModule
+  ],
 })
 export class MoviesModule {}

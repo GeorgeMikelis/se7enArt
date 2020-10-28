@@ -31,6 +31,18 @@ export class MoviesService {
     return this.http.get<Movie>(url);
   }
 
+  updateMovie(id, title, description, dateReleased) {
+    let url = `${this.baseUrl}/${ApiPaths.updateMovieById}${id}`;
+    let body = {
+      title: title,
+      description: description,
+      dateReleased: dateReleased
+    };
+    return this.http.put(url, body).subscribe(res => {
+      console.log(res)
+    });
+  }
+
   deleteMovie(id) {
     let url = `${this.baseUrl}/${ApiPaths.updateMovieById}${id}`;
     return this.http.delete(url).subscribe((res) => {
