@@ -74,7 +74,7 @@ export class MovieUpdateComponent implements OnInit, OnDestroy {
     const restOfDate: string = '-10-20T20:02:09.404Z';
     const date: string = this.movieForm.value.dateReleased.toString();
 
-    let title = this.movieForm.value.title;
+    let title = this.movieForm.value.title.trim();
     let description = this.movieForm.value.description;
     let dateReleased: string = `${date}${restOfDate}`;
 

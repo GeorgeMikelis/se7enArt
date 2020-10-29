@@ -50,6 +50,7 @@
      required
      >
      <span class="help-block" *ngIf="password.invalid && (password.dirty || password.touched)">Please enter a password with at least 6 characters, both uppercasde and lowercase</span>
+     <span class="help-block" *ngIf="password.errors?.pattern && (password.dirty || password.touched)">Passwords cannot have spaces</span>
 
      <label for="password2">reenter password</label>
      <input

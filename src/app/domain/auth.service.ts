@@ -176,16 +176,18 @@ export class AuthService {
     }
     switch (errorRes.error.message) {
       case 'Conflict username exists':
-        errorMessage = 'This username exists already.';
+        errorMessage = 'This username exists already!';
         break;
       case 'Bad Request':
-        errorMessage = 'Your credentials are not correct';
+        errorMessage = 'Your credentials are not correct!';
         break;
       case 'Conflict title exists':
-        errorMessage = 'This title exists already';
+        errorMessage = 'This title exists alread!y';
+        break;
+      case 'Bad Request. "dateReleased" must be less than or equal to "now"':
+        errorMessage = 'The year of release cannot be greater than now!';
         break;
     }
     return throwError(errorMessage);
   }
 }
-

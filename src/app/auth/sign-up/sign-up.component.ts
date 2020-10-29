@@ -26,11 +26,13 @@ export class SignUpComponent implements OnInit, OnDestroy {
     password: new FormControl('', [
       Validators.required,
       Validators.minLength(6),
+      Validators.pattern("[^' ']+"),
       bothUpperCaseLowerCaseValidator,
     ]),
     password2: new FormControl('', [
       Validators.required,
       Validators.minLength(6),
+      Validators.pattern("[^' ']+"),
       bothUpperCaseLowerCaseValidator,
     ]),
   });
@@ -78,11 +80,11 @@ export class SignUpComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    let firstname = this.signupForm.value.firstname;
-    let lastname = this.signupForm.value.lastname;
-    let username = this.signupForm.value.username;
-    let password = this.signupForm.value.password;
-    let password2 = this.signupForm.value.password2;
+    let firstname = this.signupForm.value.firstname.trim();
+    let lastname = this.signupForm.value.lastname.trim();
+    let username = this.signupForm.value.username.trim();
+    let password = this.signupForm.value.password.trim();
+    let password2 = this.signupForm.value.password2.trim();
 
     if (password === password2) {
       if (this.user) {

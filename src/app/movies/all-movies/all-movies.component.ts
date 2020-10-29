@@ -61,14 +61,13 @@ export class AllMoviesComponent implements OnInit, OnDestroy {
   }
 
   search(movieTitle: string) {
-    if (movieTitle === '') {
+    if (movieTitle.trim() === '') {
       this.searchHappened = false;
-    }
-    if (movieTitle.length) {
+    } else {
       this.searchHappened = true;
     }
     console.log(movieTitle);
-    this.moviesService.getMovies(movieTitle).subscribe((res) => {
+    this.moviesService.getMovies(movieTitle.trim()).subscribe((res) => {
       console.log(res);
     });
   }
