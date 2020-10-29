@@ -82,14 +82,12 @@ export class MoviesService {
       }).pipe(
         tap((res) => {
           this.favoriteMovies.next(res);
-          console.log(`REMOVE${res}`);
         })
       );
     } else {
       return this.http.get<Movie[]>(url).pipe(
         tap((res) => {
           this.favoriteMovies.next(res);
-          console.log(`REMOVE${res}`);
         })
       );
     }

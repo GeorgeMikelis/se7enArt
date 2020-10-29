@@ -17,8 +17,10 @@ export class AuthInterceptorService implements HttpInterceptor {
                     return next.handle(req);
                 }
                 const modifiedReq = req.clone({
-                    headers: new HttpHeaders().set('token', user.jwt)
-                    // headers: new HttpParams().set('token', user.jwt)
+                  setHeaders: {
+                    token: user.jwt
+                  }
+                    // headers: new HttpHeaders().set('token', user.jwt)
                 });
                 console.log('We have a user so we put jwt to all the requests from now on')
                 return next.handle(modifiedReq);
