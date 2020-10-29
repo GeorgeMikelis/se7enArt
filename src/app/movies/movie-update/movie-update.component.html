@@ -1,3 +1,6 @@
+<div *ngIf="error" class="alert alert-danger" style="margin-bottom: 10px;">
+  {{ error }}
+</div>
 <h2 *ngIf="!newMovie">Here you can edit the movie: "{{ (movie$ | async)?.title }}"</h2>
 <h2 *ngIf="newMovie">Here you can create a new movie</h2>
 <div class="row">

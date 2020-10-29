@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
 import { ApiPaths } from '../enums/api-paths';
 import { Movie } from '../models/movie.model';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,20 +16,22 @@ export class MoviesService {
   movies = new BehaviorSubject<Movie[]>([]);
   baseUrl = environment.baseUrl;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   getMovies(title?: string): Observable<Movie[]> {
     let url = `${this.baseUrl}/${ApiPaths.getAllMovies}`;
     if (title) {
-      return this.http.get<Movie[]>(url, {
-        params: {
-          title: title
-        }
-      }).pipe(
-        tap((res) => {
-          this.movies.next(res);
+      return this.http
+        .get<Movie[]>(url, {
+          params: {
+            title: title,
+          },
         })
-      );
+        .pipe(
+          tap((res) => {
+            this.movies.next(res);
+          })
+        );
     } else {
       return this.http.get<Movie[]>(url).pipe(
         tap((res) => {
@@ -44,13 +47,15 @@ export class MoviesService {
   }
 
   createMovie(title, description, dateReleased) {
-    let url = `${this.baseUrl}/${ApiPaths.createMovie}`
+    let url = `${this.baseUrl}/${ApiPaths.createMovie}`;
     let body = {
       title: title,
       description: description,
-      dateReleased: dateReleased
+      dateReleased: dateReleased,
     };
-    return this.http.post<Movie>(url, body).subscribe();
+    return this.http
+      .post<Movie>(url, body)
+      .pipe(catchError(this.authService.habdleError));
   }
 
   updateMovie(id, title, description, dateReleased) {
@@ -58,11 +63,11 @@ export class MoviesService {
     let body = {
       title: title,
       description: description,
-      dateReleased: dateReleased
+      dateReleased: dateReleased,
     };
-    return this.http.put(url, body).subscribe(res => {
-      console.log(res)
-    });
+    return this.http
+      .put(url, body)
+      .pipe(catchError(this.authService.habdleError));
   }
 
   deleteMovie(id) {
@@ -75,15 +80,17 @@ export class MoviesService {
   getUserFavoriteMovies(title?: string): Observable<Movie[]> {
     let url = `${this.baseUrl}/${ApiPaths.getUserFavoriteMovies}`;
     if (title) {
-      return this.http.get<Movie[]>(url, {
-        params: {
-          title: title
-        }
-      }).pipe(
-        tap((res) => {
-          this.favoriteMovies.next(res);
+      return this.http
+        .get<Movie[]>(url, {
+          params: {
+            title: title,
+          },
         })
-      );
+        .pipe(
+          tap((res) => {
+            this.favoriteMovies.next(res);
+          })
+        );
     } else {
       return this.http.get<Movie[]>(url).pipe(
         tap((res) => {
@@ -95,11 +102,10 @@ export class MoviesService {
 
   addMovieToUserFavorites(movie: Movie) {
     let url = `${this.baseUrl}/${ApiPaths.addFavoriteMovie}`;
-    return this.http.post<
-    {
-      id: string,
-      movieId: string,
-      userId: string
+    return this.http.post<{
+      id: string;
+      movieId: string;
+      userId: string;
     }>(url, { movieId: movie.id });
   }
 

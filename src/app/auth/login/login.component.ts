@@ -8,31 +8,34 @@ import { bothUpperCaseLowerCaseValidator } from '../validators/upper-lower-case-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
   error: string = null;
 
   loginForm = new FormGroup({
-    username: new FormControl('', [
-      Validators.required,
-    ]),
+    username: new FormControl('', [Validators.required]),
     password: new FormControl('', [
       Validators.required,
       Validators.minLength(6),
-      bothUpperCaseLowerCaseValidator
+      bothUpperCaseLowerCaseValidator,
     ]),
     rememberMe: new FormControl(true),
   });
 
-  get username() { return this.loginForm.get('username'); }
-  get password() { return this.loginForm.get('password'); }
-  get rememberMe() { return this.loginForm.get('rememberMe'); }
+  get username() {
+    return this.loginForm.get('username');
+  }
+  get password() {
+    return this.loginForm.get('password');
+  }
+  get rememberMe() {
+    return this.loginForm.get('rememberMe');
+  }
 
   constructor(private authServeice: AuthService, private router: Router) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   onSubmit() {
     console.warn(this.loginForm.value);
@@ -40,13 +43,13 @@ export class LoginComponent implements OnInit {
     let password = this.loginForm.value.password;
     let rememberMe = this.loginForm.value.rememberMe;
     this.authServeice.login(username, password, rememberMe).subscribe(
-      resData => {
-        console.log(resData)
+      (resData) => {
+        console.log(resData);
       },
-      errorMessage => {
+      (errorMessage) => {
         console.log(errorMessage);
         this.error = errorMessage;
-    }
+      }
     );
   }
 }

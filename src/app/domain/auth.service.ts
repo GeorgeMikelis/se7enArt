@@ -168,22 +168,24 @@ export class AuthService {
     }
   }
 
-  private habdleError(errorRes: HttpErrorResponse) {
-    let errorMessage = 'An unknown error occurred!';
-    if (!errorRes.error || !errorRes.error.error) {
+  public habdleError(errorRes: HttpErrorResponse) {
+    let errorMessage = 'An error occurred!';
+    console.log(errorRes.error.message);
+    if (!errorRes.error || !errorRes.error.message) {
       return throwError(errorMessage);
     }
-    switch (errorRes.error.error.message) {
+    switch (errorRes.error.message) {
       case 'Conflict username exists':
         errorMessage = 'This username exists already.';
         break;
       case 'Bad Request':
-        errorMessage = 'Your credencials are not correct';
+        errorMessage = 'Your credentials are not correct';
         break;
-      case 'Conflict username exists':
-        errorMessage = 'You must change you username';
+      case 'Conflict title exists':
+        errorMessage = 'This title exists already';
         break;
     }
     return throwError(errorMessage);
   }
 }
+
